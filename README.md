@@ -1,6 +1,6 @@
 <img width="128" height="128" alt="icon" src="https://github.com/user-attachments/assets/664130db-42c8-4ed7-b36e-5869d1e118e5" />
 
-# PandaUniqueItems
+# PandaUniqueItem
 
 ## Description
 
