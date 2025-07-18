@@ -12,8 +12,8 @@ This mod solves that.
 
 ## Works Great With
 
-[Panda Block Name](https://modrinth.com/mod/pandablockname) 
-By using them together, you can name blocks, and they will keep their forged lore & custom name when placed and picked up again. 
+[Panda Block Name](https://modrinth.com/mod/pandablockname)   
+    By using them together, you can name blocks, and they will keep their forged lore & custom name when placed and picked up again. 
 
 ## Screenshot
 
