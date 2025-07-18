@@ -19,6 +19,10 @@ This mod solves that.
 
 <img width="438" height="343" alt="image" src="https://github.com/user-attachments/assets/92edcb86-761a-4795-a175-283a7aa31950" />
 
+## Try it out
+`hardcoreanarchy.gay`   (Deathban Anarchy)  
+`sky.hardcoreanarchy.gay`   (Skyblock Anarchy)
+
 ## Support
 
 [Support discord here!]( https://discord.gg/3tP3Tqu983)
