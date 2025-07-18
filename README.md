@@ -4,8 +4,7 @@
 
 ## Description
 
-A simple mod that adds lore text to say who forged an item and when when changing an items name in the anvil.
-Removing a custom name in an anvil also removes the lore.
+A simple mod that adds lore text to say who forged an item and at what date when using an anvil. Removing a custom name will remove the lore.
 
 When an item holds sentimental value, nothing prevents someone  from creating a duplicate with the same name and enchantments, making it impossible to distinguish between the originals.
 This mod solves that.
