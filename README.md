@@ -4,11 +4,23 @@
 
 ## Description
 
-Add lore text to say who forged an item and when when changing an items name in the anvil.
+A simple mod that adds lore text to say who forged an item and at what date when using an anvil. Removing a custom name will remove the lore.
+
+When an item holds sentimental value, nothing prevents someone  from creating a duplicate with the same name and enchantments, making it impossible to distinguish between the originals.
+This mod solves that.
+
+## Works Great With
+
+[Panda Block Name](https://modrinth.com/mod/pandablockname)   
+    By using them together, you can name blocks, and they will keep their forged lore & custom name when placed and picked up again. 
 
 ## Screenshot
 
 <img width="438" height="343" alt="image" src="https://github.com/user-attachments/assets/92edcb86-761a-4795-a175-283a7aa31950" />
+
+## Try it out
+`hardcoreanarchy.gay`   (Deathban Anarchy)  
+`sky.hardcoreanarchy.gay`   (Skyblock Anarchy)
 
 ## Support
 
