@@ -1,6 +1,8 @@
 package me.TreeOfSelf.mixin;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import me.TreeOfSelf.PandaUniqueItem;
+import me.TreeOfSelf.TextFormattingHelper;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.LoreComponent;
 import net.minecraft.entity.player.PlayerEntity;
@@ -39,7 +41,7 @@ public class AnvilLoreMixin  {
 		List<Text> lore = new ArrayList<>();
 
 		long unixTimestamp = Instant.now().getEpochSecond();
-				
+
 		LocalDate currentDate = Instant.ofEpochSecond(unixTimestamp)
 				.atZone(ZoneId.systemDefault())
 				.toLocalDate();
@@ -47,9 +49,24 @@ public class AnvilLoreMixin  {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
 		String formattedDate = currentDate.format(formatter);
 
-		lore.add(Text.literal(""));
-		lore.add(Text.literal("§fForged by " + player.getName().getString()));
-		lore.add(Text.literal("§6" + formattedDate));
+		String playerName = player.getName().getString();
+
+		// Use config to generate lore
+		if (PandaUniqueItem.config != null && PandaUniqueItem.config.loreFormat != null) {
+			for (String line : PandaUniqueItem.config.loreFormat) {
+				String processedLine = line
+					.replace("%player_name%", playerName)
+					.replace("%data%", formattedDate);
+
+				lore.add(TextFormattingHelper.formatTextWithCustomCodes(processedLine));
+			}
+		} else {
+			// Fallback to hardcoded lore if config is not available
+			lore.add(Text.literal(""));
+			lore.add(Text.literal("§fForged by " + playerName));
+			lore.add(Text.literal("§6" + formattedDate));
+		}
+
 		return lore;
 	}
 
