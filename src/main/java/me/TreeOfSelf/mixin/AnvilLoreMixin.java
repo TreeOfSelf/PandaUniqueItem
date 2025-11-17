@@ -56,7 +56,7 @@ public class AnvilLoreMixin  {
 			for (String line : PandaUniqueItem.config.loreFormat) {
 				String processedLine = line
 					.replace("%player_name%", playerName)
-					.replace("%data%", formattedDate);
+					.replace("%date%", formattedDate);
 
 				lore.add(TextFormattingHelper.formatTextWithCustomCodes(processedLine));
 			}

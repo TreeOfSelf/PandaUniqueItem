@@ -50,7 +50,7 @@ public class Config {
         config.loreFormat = List.of(
             "",
             "<white>Forged by %player_name%",
-            "<yellow>%data%"
+            "<yellow>%date%"
         );
         return config;
     }
