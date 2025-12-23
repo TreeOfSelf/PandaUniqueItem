@@ -20,7 +20,7 @@ public class PandaUniqueItem implements ModInitializer {
 		LOGGER.info("PandaUniqueItem Started");
 
 		// Load config
-		Path configPath = FabricLoader.getInstance().getConfigDir().resolve("panda-unique-item.json");
+		Path configPath = FabricLoader.getInstance().getConfigDir().resolve("PandaUniqueItem.json");
 		config = Config.load(configPath);
 		LOGGER.info("Config loaded from: {}", configPath);
 	}

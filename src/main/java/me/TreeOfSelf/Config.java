@@ -12,11 +12,13 @@ public class Config {
     public List<String> loreFormat;
 
     public static Config load(Path configPath) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .disableHtmlEscaping()
+                .create();
 
         try {
             if (!Files.exists(configPath)) {
-                // Create default config
                 Config defaultConfig = createDefault();
                 save(defaultConfig, configPath);
                 return defaultConfig;
@@ -33,7 +35,10 @@ public class Config {
     }
 
     public static void save(Config config, Path configPath) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .disableHtmlEscaping()
+                .create();
 
         try {
             Files.createDirectories(configPath.getParent());
@@ -48,9 +53,9 @@ public class Config {
     private static Config createDefault() {
         Config config = new Config();
         config.loreFormat = List.of(
-            "",
-            "<white>Forged by %player_name%",
-            "<yellow>%date%"
+                "",
+                "<white>Forged by %player_name%",
+                "<gold>%date%"
         );
         return config;
     }
