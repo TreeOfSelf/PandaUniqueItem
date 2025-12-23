@@ -13,7 +13,6 @@ public class TextFormattingHelper {
         // Replace <ra> with <gr:red:yellow:green>
         String processedText = text.replace("<ra>", "<gr:red:yellow:green>");
 
-        // Apply the standard formatting
         return TextParserUtils.formatTextSafe(processedText);
     }
 }

@@ -51,17 +51,16 @@ public class AnvilLoreMixin  {
 
 		String playerName = player.getName().getString();
 
-		// Use config to generate lore
 		if (PandaUniqueItem.config != null && PandaUniqueItem.config.loreFormat != null) {
 			for (String line : PandaUniqueItem.config.loreFormat) {
 				String processedLine = line
-					.replace("%player_name%", playerName)
-					.replace("%date%", formattedDate);
+						.replace("%player_name%", playerName)
+						.replace("%date%", formattedDate);
 
-				lore.add(TextFormattingHelper.formatTextWithCustomCodes(processedLine));
+				Text formattedText = TextFormattingHelper.formatTextWithCustomCodes(processedLine);
+				lore.add(formattedText.copy().setStyle(formattedText.getStyle().withItalic(false)));
 			}
 		} else {
-			// Fallback to hardcoded lore if config is not available
 			lore.add(Text.literal(""));
 			lore.add(Text.literal("§fForged by " + playerName));
 			lore.add(Text.literal("§6" + formattedDate));
@@ -69,7 +68,6 @@ public class AnvilLoreMixin  {
 
 		return lore;
 	}
-
 	@Inject(
 			method = "updateResult",
 			at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;set(Lnet/minecraft/component/ComponentType;Ljava/lang/Object;)Ljava/lang/Object;", shift = At.Shift.BEFORE, ordinal = 0)
