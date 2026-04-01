@@ -17,15 +17,18 @@
 	"entrypoints": {
 		"main": [
 			"me.TreeOfSelf.PandaUniqueItem"
+		],
+		"client": [
+			"me.TreeOfSelf.PandaUniqueItemClient"
 		]
 	},
 	"mixins": [
 		"panda-unique-item.mixins.json"
 	],
 	"depends": {
-		"fabricloader": ">=0.16.14",
-		"minecraft": "~1.21.6",
-		"java": ">=21",
+		"fabricloader": ">=0.18.6",
+		"minecraft": "~26.1",
+		"java": ">=25",
 		"fabric-api": "*"
 	},
 	"suggests": {

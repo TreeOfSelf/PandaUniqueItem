@@ -1,18 +1,23 @@
 package me.TreeOfSelf;
 
-import eu.pb4.placeholders.api.TextParserUtils;
-import net.minecraft.text.Text;
+import eu.pb4.placeholders.api.ParserContext;
+import eu.pb4.placeholders.api.parsers.NodeParser;
+import eu.pb4.placeholders.api.parsers.ParserBuilder;
+import net.minecraft.network.chat.Component;
 
 public class TextFormattingHelper {
+	private static final NodeParser PARSER = ParserBuilder.of()
+			.simplifiedTextFormat()
+			.requireSafe()
+			.build();
 
-    public static Text formatTextWithCustomCodes(String text) {
-        if (text == null || text.isEmpty()) {
-            return Text.empty();
-        }
+	public static Component formatTextWithCustomCodes(String text) {
+		if (text == null || text.isEmpty()) {
+			return Component.empty();
+		}
 
-        // Replace <ra> with <gr:red:yellow:green>
-        String processedText = text.replace("<ra>", "<gr:red:yellow:green>");
+		String processedText = text.replace("<ra>", "<gr:red:yellow:green>");
 
-        return TextParserUtils.formatTextSafe(processedText);
-    }
+		return PARSER.parseComponent(processedText, ParserContext.of());
+	}
 }
