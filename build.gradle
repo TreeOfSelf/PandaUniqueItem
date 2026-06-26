@@ -32,10 +32,10 @@ dependencies {
 	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	annotationProcessor "io.github.llamalad7:mixinextras-fabric:0.5.3"
-	implementation "io.github.llamalad7:mixinextras-fabric:0.5.3"
+	annotationProcessor "io.github.llamalad7:mixinextras-fabric:0.5.4"
+	implementation "io.github.llamalad7:mixinextras-fabric:0.5.4"
 
-	implementation(include("eu.pb4:placeholder-api:3.0.0-beta.2+26.1"))
+	implementation(include("eu.pb4:placeholder-api:3.1.0-beta.1+26.2"))
 }
 
 processResources {

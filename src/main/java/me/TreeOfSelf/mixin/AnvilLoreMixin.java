@@ -62,7 +62,7 @@ public abstract class AnvilLoreMixin {
 	private void panda$applyResultLore(CallbackInfo ci) {
 		ItemCombinerMenuAccessor access = (ItemCombinerMenuAccessor) (Object) this;
 		ItemStack result = access.panda$resultSlots().getItem(0);
-		if (!result.isEmpty()) {
+		if (!result.isEmpty() && result.has(DataComponents.CUSTOM_NAME)) {
 			Player player = access.panda$player();
 			List<Component> lore = panda$generateLore(player);
 			result.set(DataComponents.LORE, new ItemLore(lore));
