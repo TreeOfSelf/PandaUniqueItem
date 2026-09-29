@@ -35,7 +35,7 @@ dependencies {
 	annotationProcessor "io.github.llamalad7:mixinextras-fabric:0.5.4"
 	implementation "io.github.llamalad7:mixinextras-fabric:0.5.4"
 
-	implementation(include("eu.pb4:placeholder-api:3.1.0-beta.1+26.2"))
+	implementation(include("eu.pb4:placeholder-api:3.2.0+26.3"))
 }
 
 processResources {
