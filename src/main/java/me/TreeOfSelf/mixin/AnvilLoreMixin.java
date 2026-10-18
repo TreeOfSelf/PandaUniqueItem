@@ -66,7 +66,28 @@ public abstract class AnvilLoreMixin {
 			Player player = access.panda$player();
 			List<Component> lore = panda$generateLore(player);
 			result.set(DataComponents.LORE, new ItemLore(lore));
+		} else if (!result.isEmpty() && panda$isForgedLore(result.get(DataComponents.LORE))) {
+			// Name cleared: the forged lore goes with it
+			result.remove(DataComponents.LORE);
 		}
+	}
+
+	// Lore this mod wrote: one line per loreFormat line, matching it with any player name and date
+	private static boolean panda$isForgedLore(ItemLore lore) {
+		List<String> format = PandaUniqueItem.config != null && PandaUniqueItem.config.loreFormat != null
+				? PandaUniqueItem.config.loreFormat : List.of("", "Forged by %player_name%", "%date%");
+		if (lore == null || lore.lines().size() != format.size()) return false;
+		for (int i = 0; i < format.size(); i++) {
+			String plain = format.get(i).replaceAll("<[^>]*>", "").replaceAll("&[0-9a-fk-or]", "");
+			StringBuilder regex = new StringBuilder();
+			for (String part : plain.split("((?=%player_name%)|(?<=%player_name%)|(?=%date%)|(?<=%date%))")) {
+				if (part.equals("%player_name%")) regex.append("\\S{1,16}");
+				else if (part.equals("%date%")) regex.append("[A-Za-z]{3} \\d{2}, \\d{4}");
+				else if (!part.isEmpty()) regex.append(java.util.regex.Pattern.quote(part));
+			}
+			if (!lore.lines().get(i).getString().matches(regex.toString())) return false;
+		}
+		return true;
 	}
 
 	@Inject(method = "setItemName", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/AnvilMenu;createResult()V", shift = At.Shift.BEFORE))
