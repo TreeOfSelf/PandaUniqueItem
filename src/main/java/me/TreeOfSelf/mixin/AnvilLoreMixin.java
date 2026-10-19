@@ -63,20 +63,42 @@ public abstract class AnvilLoreMixin {
 		ItemCombinerMenuAccessor access = (ItemCombinerMenuAccessor) (Object) this;
 		ItemStack result = access.panda$resultSlots().getItem(0);
 		if (!result.isEmpty() && result.has(DataComponents.CUSTOM_NAME)) {
-			Player player = access.panda$player();
-			List<Component> lore = panda$generateLore(player);
-			result.set(DataComponents.LORE, new ItemLore(lore));
-		} else if (!result.isEmpty() && panda$isForgedLore(result.get(DataComponents.LORE))) {
-			// Name cleared: the forged lore goes with it
-			result.remove(DataComponents.LORE);
+			panda$setForgedLore(result, access.panda$player());
+		} else if (!result.isEmpty() && panda$hasForgedLore(result.get(DataComponents.LORE))) {
+			// Name cleared: the forged lore goes with it, any other lore stays
+			List<Component> kept = panda$withoutForgedLore(result.get(DataComponents.LORE));
+			if (kept.isEmpty()) result.remove(DataComponents.LORE);
+			else result.set(DataComponents.LORE, new ItemLore(kept));
 		}
 	}
 
-	// Lore this mod wrote: one line per loreFormat line, matching it with any player name and date
-	private static boolean panda$isForgedLore(ItemLore lore) {
-		List<String> format = PandaUniqueItem.config != null && PandaUniqueItem.config.loreFormat != null
+	// Keeps the item's own lore (head death lines, other mods' lore) and puts the forged lines under it,
+	// replacing forged lines from an earlier rename
+	private void panda$setForgedLore(ItemStack stack, Player player) {
+		List<Component> forged = panda$generateLore(player);
+		List<Component> own = panda$withoutForgedLore(stack.get(DataComponents.LORE));
+		List<Component> lore = new ArrayList<>(own.subList(0, Math.min(own.size(), Math.max(0, ItemLore.MAX_LINES - forged.size()))));
+		lore.addAll(forged);
+		stack.set(DataComponents.LORE, new ItemLore(lore));
+	}
+
+	private static List<Component> panda$withoutForgedLore(ItemLore lore) {
+		if (lore == null) return List.of();
+		List<Component> lines = lore.lines();
+		if (!panda$hasForgedLore(lore)) return lines;
+		return lines.subList(0, lines.size() - panda$loreFormat().size());
+	}
+
+	private static List<String> panda$loreFormat() {
+		return PandaUniqueItem.config != null && PandaUniqueItem.config.loreFormat != null
 				? PandaUniqueItem.config.loreFormat : List.of("", "Forged by %player_name%", "%date%");
-		if (lore == null || lore.lines().size() != format.size()) return false;
+	}
+
+	// Lore ends with lines this mod wrote: one line per loreFormat line, matching it with any player name and date
+	private static boolean panda$hasForgedLore(ItemLore lore) {
+		List<String> format = panda$loreFormat();
+		if (lore == null || lore.lines().size() < format.size()) return false;
+		int offset = lore.lines().size() - format.size();
 		for (int i = 0; i < format.size(); i++) {
 			String plain = format.get(i).replaceAll("<[^>]*>", "").replaceAll("&[0-9a-fk-or]", "");
 			StringBuilder regex = new StringBuilder();
@@ -85,7 +107,7 @@ public abstract class AnvilLoreMixin {
 				else if (part.equals("%date%")) regex.append("[A-Za-z]{3} \\d{2}, \\d{4}");
 				else if (!part.isEmpty()) regex.append(java.util.regex.Pattern.quote(part));
 			}
-			if (!lore.lines().get(i).getString().matches(regex.toString())) return false;
+			if (!lore.lines().get(offset + i).getString().matches(regex.toString())) return false;
 		}
 		return true;
 	}
@@ -95,9 +117,7 @@ public abstract class AnvilLoreMixin {
 		Slot slot = ((AnvilMenu) (Object) this).getSlot(2);
 		if (slot.hasItem()) {
 			ItemStack stack = slot.getItem();
-			Player player = ((ItemCombinerMenuAccessor) (Object) this).panda$player();
-			List<Component> lore = panda$generateLore(player);
-			stack.set(DataComponents.LORE, new ItemLore(lore));
+			panda$setForgedLore(stack, ((ItemCombinerMenuAccessor) (Object) this).panda$player());
 		}
 	}
 }
